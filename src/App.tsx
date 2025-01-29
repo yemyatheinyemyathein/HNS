@@ -1,6 +1,10 @@
+import Layout from "./pages/Layout"
+
 const App = () => {
   return (
-    <div className='bg-red-200 text-red-500'>App</div>
+    <div>
+      <Layout/>
+    </div>
   )
 }
 
