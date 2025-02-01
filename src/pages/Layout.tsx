@@ -1,3 +1,4 @@
+import { Outlet } from "react-router-dom";
 import TopNav from '../assets/layout/TopNav';
 import BottomNav from '../assets/layout/BottomNav';
 import Footer from '../assets/layout/Footer';
@@ -11,48 +12,8 @@ const Layout = () => {
       </div>
 
       {/* Main Content (Fills remaining space) */}
-      <div className="flex-grow pt-[80px]">
-        {/* Adjust pt-[80px] to match the height of TopNav */}
-        <p>HEllo Baby</p>
-        <p>HEllo Baby</p>
-        <p>HEllo Baby</p>
-        <p>HEllo Baby</p>
-        <p>HEllo Baby</p>
-        <p>HEllo Baby</p>
-        <p>HEllo Baby</p>
-        <p>HEllo Baby</p>
-        <p>HEllo Baby</p>
-        <p>HEllo Baby</p>
-        <p>HEllo Baby</p>
-        <p>HEllo Baby</p>
-        <p>HEllo Baby</p>
-        <p>HEllo Baby</p>
-        <p>HEllo Baby</p>
-        <p>HEllo Baby</p>
-        <p>HEllo Baby</p>
-        <p>HEllo Baby</p>
-        <p>HEllo Baby</p>
-        <p>HEllo Baby</p>
-        <p>HEllo Baby</p>
-        <p>HEllo Baby</p>
-        <p>HEllo Baby</p>
-        <p>HEllo Baby</p>
-        <p>HEllo Baby</p>
-        <p>HEllo Baby</p>
-        <p>HEllo Baby</p>
-        <p>HEllo Baby</p>
-        <p>HEllo Baby</p>
-        <p>HEllo Baby</p>
-        <p>HEllo Baby</p>
-        <p>HEllo Baby</p>
-        <p>HEllo Baby</p>
-        <p>HEllo Baby</p>
-        <p>HEllo Baby</p>
-        <p>HEllo Baby</p>
-        <p>HEllo Baby</p>
-        <p>HEllo Baby</p>
-        <p>HEllo Baby</p>
-        <p>HEllo Baby</p>
+      <div className="flex-grow pt-[80px] px-4">
+        <Outlet /> {/* This is where your page content will render */}
       </div>
 
       {/* Bottom Navigation */}

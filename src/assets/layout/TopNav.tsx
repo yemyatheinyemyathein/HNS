@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Search, ShoppingCart, Menu } from "lucide-react";
 import Logo from "../../assets/Logo.png";
@@ -11,9 +11,53 @@ const TopNav = () => {
   const [searchOpened, setSearchOpened] = useState(false);
   const [cartItems] = useState(3);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [underlineLeft, setUnderlineLeft] = useState(0);
+  const [underlineWidth, setUnderlineWidth] = useState(0);
+  const navRef = useRef<HTMLDivElement>(null);
+  const itemsRef = useRef<(HTMLButtonElement | null)[]>([]);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const updateUnderlinePosition = () => {
+      const activeIndex = navItems.indexOf(activeLink);
+      const activeItem = itemsRef.current[activeIndex];
+      const nav = navRef.current;
+
+      if (activeItem && nav) {
+        const navRect = nav.getBoundingClientRect();
+        const itemRect = activeItem.getBoundingClientRect();
+
+        const left = itemRect.left - navRect.left;
+        const width = itemRect.width;
+
+        setUnderlineLeft(left);
+        setUnderlineWidth(width);
+      }
+    };
+
+    updateUnderlinePosition();
+    window.addEventListener("resize", updateUnderlinePosition);
+
+    return () => window.removeEventListener("resize", updateUnderlinePosition);
+  }, [activeLink]);
 
   return (
-    <header className="bg-[#191919] text-white px-6 py-4 fixed w-full top-0 z-50 shadow-md">
+    <header
+      className={`${isScrolled
+          ? "bg-[#191919]/0 backdrop-blur-2xl shadow-lg"  // Added transparency
+          : "bg-[#191919]"
+        } text-white px-6 py-4 fixed w-full top-0 z-50 transition-all duration-300`}
+    >
+      {" "}
       <div className="flex justify-between items-center max-w-7xl mx-auto">
         {/* Burger Menu (Mobile) */}
         <button
@@ -23,7 +67,7 @@ const TopNav = () => {
           <Menu size={24} />
         </button>
 
-        {/* Logo - Centered on mobile */}
+        {/* Logo */}
         <motion.div
           whileHover={{ scale: 1.05 }}
           className="flex items-center gap-2"
@@ -35,30 +79,41 @@ const TopNav = () => {
         </motion.div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex space-x-6 relative">
-          {navItems.map((item) => (
+        <nav ref={navRef} className="hidden md:flex space-x-6 relative">
+          {navItems.map((item, index) => (
             <motion.div
               key={item}
               whileHover={{ scale: 1.05 }}
               className="relative"
             >
               <button
-                className={`transition ${
-                  activeLink === item
-                    ? "font-bold border-b-2 border-[#F93827] text-[#F93827]"
-                    : ""
-                }`}
+                ref={(el) => (itemsRef.current[index] = el)}
+                className={`transition ${activeLink === item ? "font-bold text-[#F93827]" : ""
+                  }`}
                 onClick={() => setActiveLink(item)}
               >
                 {item}
               </button>
             </motion.div>
           ))}
+
+          {/* Animated Underline */}
+          <motion.div
+            className="absolute bottom-0 h-[2px] bg-[#F93827]"
+            animate={{
+              left: underlineLeft,
+              width: underlineWidth,
+            }}
+            transition={{
+              type: "spring",
+              stiffness: 200,
+              damping: 20,
+            }}
+          />
         </nav>
 
-        {/* Right Section: Search & Cart */}
+        {/* Right Section */}
         <div className="flex items-center space-x-4">
-          {/* Search Button */}
           <button onClick={() => setSearchOpened(!searchOpened)}>
             <Search
               size={20}
@@ -66,7 +121,6 @@ const TopNav = () => {
             />
           </button>
 
-          {/* Shopping Cart */}
           <motion.div whileHover={{ scale: 1.05 }} className="relative">
             <button className="relative">
               <ShoppingCart
@@ -82,9 +136,7 @@ const TopNav = () => {
           </motion.div>
         </div>
       </div>
-
-      {/* Mobile Sidebar Menu */}
-      <LeftSideBar menuOpen={menuOpen} setMenuOpen={setMenuOpen}/>
+      <LeftSideBar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
     </header>
   );
 };
