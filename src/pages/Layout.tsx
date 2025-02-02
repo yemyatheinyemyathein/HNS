@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
-import TopNav from '../assets/layout/TopNav';
-import BottomNav from '../assets/layout/BottomNav';
-import Footer from '../assets/layout/Footer';
+import TopNav from '../components/layout/TopNav';
+import BottomNav from '../components/layout/BottomNav';
+import Footer from '../components/layout/Footer';
 
 const Layout = () => {
   return (
@@ -12,8 +12,27 @@ const Layout = () => {
       </div>
 
       {/* Main Content (Fills remaining space) */}
-      <div className="flex-grow pt-[80px] px-4">
-        <Outlet /> {/* This is where your page content will render */}
+      <div className="flex-grow ">
+        <Outlet />
+        <p>Testing</p>
+        <p>Testing</p>
+        <p>Testing</p>
+        <p>Testing</p>
+        <p>Testing</p>
+        <p>Testing</p>
+        <p>Testing</p>
+        <p>Testing</p>
+        <p>Testing</p>
+        <p>Testing</p>
+        <p>Testing</p>
+        <p>Testing</p>
+        <p>Testing</p>
+        <p>Testing</p>
+        <p>Testing</p>
+        <p>Testing</p>
+        <p>Testing</p>
+        <p>Testing</p>
+        <p>Testing</p>
       </div>
 
       {/* Bottom Navigation */}

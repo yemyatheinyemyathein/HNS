@@ -54,14 +54,14 @@ const TopNav = () => {
     <header
       className={`${isScrolled
           ? "bg-[#191919]/0 backdrop-blur-2xl shadow-lg"  // Added transparency
-          : "bg-[#191919]"
-        } text-white px-6 py-4 fixed w-full top-0 z-50 transition-all duration-300`}
+          : "bg-transparent"
+        }  px-6 py-4 fixed w-full top-0 z-50 transition-all duration-300`}
     >
       {" "}
       <div className="flex justify-between items-center max-w-7xl mx-auto">
         {/* Burger Menu (Mobile) */}
         <button
-          className="md:hidden text-white hover:text-gray-300 transition"
+          className="md:hidden hover:text-gray-300 transition"
           onClick={() => setMenuOpen(true)}
         >
           <Menu size={24} />
@@ -117,7 +117,7 @@ const TopNav = () => {
           <button onClick={() => setSearchOpened(!searchOpened)}>
             <Search
               size={20}
-              className="text-gray-300 hover:text-white transition"
+              className="transition"
             />
           </button>
 
@@ -125,7 +125,7 @@ const TopNav = () => {
             <button className="relative">
               <ShoppingCart
                 size={20}
-                className="text-gray-300 hover:text-white transition"
+                className="transition"
               />
               {cartItems > 0 && (
                 <span className="absolute -top-3 -right-3 bg-[#F93827] text-white text-xs font-bold px-2 py-1 rounded-full">
